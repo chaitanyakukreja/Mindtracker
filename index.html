@@ -1,32 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MindTrack</title>
-  <link rel="stylesheet" href="style.css" />
+    <title>MindTrack</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h2 { color: #2e6c80; }
+        a { margin: 0 10px; }
+        form input, form textarea { display: block; margin: 8px 0; padding: 6px; width: 300px; }
+        form button { margin-top: 10px; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🧠 MindTrack</h1>
 
-    <form id="daily-form">
-      <label>Mood: <input type="text" id="mood" required /></label><br/>
-      <label>Reason: <input type="text" id="reason" /></label><br/>
-      <label>Intention: <input type="text" id="intention" /></label><br/>
-      <label>Habits (comma-separated): <input type="text" id="habits" /></label><br/>
-      <h3>Reflection</h3>
-      <label>What went well? <textarea id="q1"></textarea></label><br/>
-      <label>What could be better? <textarea id="q2"></textarea></label><br/>
-      <label>What did you learn? <textarea id="q3"></textarea></label><br/>
+{% if page == "home" %}
+    <h2>Welcome to MindTrack 🌟</h2>
+    <a href="/login">Login</a> or <a href="/register">Register</a>
 
-      <button type="submit">Save Today</button>
+{% elif page == "register" %}
+    <h2>Register</h2>
+    <form method="POST">
+        Username: <input name="username" required>
+        Password: <input name="password" type="password" required>
+        <button type="submit">Register</button>
+    </form>
+    <a href="/">Back to Home</a>
+
+{% elif page == "login" %}
+    <h2>Login</h2>
+    <form method="POST">
+        Username: <input name="username" required>
+        Password: <input name="password" type="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <a href="/">Back to Home</a>
+
+{% elif page == "dashboard" %}
+    <h2>Hello {{ username }}!</h2>
+    <form method="POST">
+        Mood: <input name="mood" required>
+        Reason: <input name="reason">
+        Intention: <input name="intention">
+        Habits (comma-separated): <input name="habits">
+        What went well? <textarea name="q1"></textarea>
+        What could be better? <textarea name="q2"></textarea>
+        What did you learn? <textarea name="q3"></textarea>
+        <button type="submit">Save Entry</button>
     </form>
 
-    <button id="summary-btn">📊 View Weekly Summary</button>
-    <div id="summary"></div>
-  </div>
+    <h3>Your Recent Entries</h3>
+    <ul>
+        {% for date, mood, intention in entries %}
+            <li><strong>{{ date }}</strong>: Mood - {{ mood }}, Intention - {{ intention }}</li>
+        {% endfor %}
+    </ul>
 
-  <script src="script.js"></script>
+    <a href="/summary">Weekly Summary</a> | <a href="/logout">Logout</a>
+
+{% elif page == "summary" %}
+    <h2>Weekly Summary for {{ username }}</h2>
+
+    <h3>Mood Stats</h3>
+    <ul>
+        {% for mood, count in mood_stats.items() %}
+            <li>{{ mood }}: {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Habit Stats</h3>
+    <ul>
+        {% for habit, count in habit_stats.items() %}
+            <li>{{ habit }}: {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/dashboard">Back to Dashboard</a> | <a href="/logout">Logout</a>
+
+{% endif %}
+
 </body>
 </html>
