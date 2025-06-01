@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindTrack</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🧠 MindTrack</h1>
+
+    <form id="daily-form">
+      <label>Mood: <input type="text" id="mood" required /></label><br/>
+      <label>Reason: <input type="text" id="reason" /></label><br/>
+      <label>Intention: <input type="text" id="intention" /></label><br/>
+      <label>Habits (comma-separated): <input type="text" id="habits" /></label><br/>
+      <h3>Reflection</h3>
+      <label>What went well? <textarea id="q1"></textarea></label><br/>
+      <label>What could be better? <textarea id="q2"></textarea></label><br/>
+      <label>What did you learn? <textarea id="q3"></textarea></label><br/>
+
+      <button type="submit">Save Today</button>
+    </form>
+
+    <button id="summary-btn">📊 View Weekly Summary</button>
+    <div id="summary"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
